@@ -499,9 +499,9 @@ void set_gpio_as_output(uint8_t GPIO){
       {
         channel_zero_enabled = 0;
         disable_channel(0);
-        nrf_gpio_cfg_output(BLUEBIRD_GPIO1);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO1, 1);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO1, 0);
+        nrf_gpio_cfg_output(DGPIO1);
+        nrf_gpio_pin_write(DGPIO1, 1);
+        nrf_gpio_pin_write(DGPIO1, 0);
       }
     } 
     else if (4 == GPIO) //AIN3 = 5 = GPIO4  
@@ -514,9 +514,9 @@ void set_gpio_as_output(uint8_t GPIO){
       {
         channel_three_enabled = 0;
         disable_channel(3);
-        nrf_gpio_cfg_output(BLUEBIRD_GPIO4);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO4, 1);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO4, 0);
+        nrf_gpio_cfg_output(DGPIO4);
+        nrf_gpio_pin_write(DGPIO4, 1);
+        nrf_gpio_pin_write(DGPIO4, 0);
 
       }
     } 
@@ -530,9 +530,9 @@ void set_gpio_as_output(uint8_t GPIO){
       {
         channel_one_enabled = 0;
         disable_channel(1);
-        nrf_gpio_cfg_output(BLUEBIRD_GPIO3);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO3, 1);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO3, 0);
+        nrf_gpio_cfg_output(DGPIO3);
+        nrf_gpio_pin_write(DGPIO3, 1);
+        nrf_gpio_pin_write(DGPIO3, 0);
       }
     } 
     else if (2 == GPIO) //AIN5 == 29 = GPIO2
@@ -545,9 +545,9 @@ void set_gpio_as_output(uint8_t GPIO){
       {
         channel_five_enabled = 0;
         disable_channel(5);
-        nrf_gpio_cfg_output(BLUEBIRD_GPIO2);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO2, 1);
-        nrf_gpio_pin_write(BLUEBIRD_GPIO2, 0);
+        nrf_gpio_cfg_output(DGPIO2);
+        nrf_gpio_pin_write(DGPIO2, 1);
+        nrf_gpio_pin_write(DGPIO2, 0);
       }
     }
 }
@@ -560,7 +560,7 @@ void set_gpio_as_input(uint8_t GPIO){
       if (0 == channel_zero_enabled)
       {
         channel_zero_enabled = 1;
-        nrf_gpio_cfg_input(BLUEBIRD_GPIO1, NRF_GPIO_PIN_PULLDOWN);
+        nrf_gpio_cfg_input(DGPIO1, NRF_GPIO_PIN_PULLDOWN);
         enable_channel(0);
       }
       else
@@ -573,7 +573,7 @@ void set_gpio_as_input(uint8_t GPIO){
       if (0 == channel_three_enabled)
       {
         channel_three_enabled = 1;
-        nrf_gpio_cfg_input(BLUEBIRD_GPIO4, NRF_GPIO_PIN_PULLDOWN);
+        nrf_gpio_cfg_input(DGPIO4, NRF_GPIO_PIN_PULLDOWN);
         enable_channel(3);
       }
       else
@@ -586,7 +586,7 @@ void set_gpio_as_input(uint8_t GPIO){
       if (0 == channel_one_enabled)
       {
         channel_one_enabled = 1;
-        nrf_gpio_cfg_input(BLUEBIRD_GPIO3, NRF_GPIO_PIN_PULLDOWN);
+        nrf_gpio_cfg_input(DGPIO3, NRF_GPIO_PIN_PULLDOWN);
         enable_channel(1);
       }
       else
@@ -599,7 +599,7 @@ void set_gpio_as_input(uint8_t GPIO){
       if (0 == channel_five_enabled)
       {
         channel_five_enabled = 1;
-        nrf_gpio_cfg_input(BLUEBIRD_GPIO2, NRF_GPIO_PIN_PULLDOWN);
+        nrf_gpio_cfg_input(DGPIO2, NRF_GPIO_PIN_PULLDOWN);
         enable_channel(5);
       }
       else
@@ -611,26 +611,3 @@ void set_gpio_as_input(uint8_t GPIO){
 
 
 
-
-
-
-//
-//void addSecondChannel(void){
-//    nrfx_saadc_uninit();
-//}
-
-
-
-
-
-    //nrf_gpio_cfg_output(BLUEBIRD_GPIO1);
-    //nrf_gpio_pin_write(BLUEBIRD_GPIO1, 1);
-
-    //nrf_gpio_cfg_output(BLUEBIRD_GPIO1);
-    //nrf_gpio_pin_write(BLUEBIRD_GPIO1, 1);
-
-    //nrf_gpio_cfg_output(BLUEBIRD_GPIO3);
-    //nrf_gpio_pin_write(BLUEBIRD_GPIO3, 1);
-
-    //nrf_gpio_cfg_output(BLUEBIRD_GPIO1);
-    //nrf_gpio_pin_write(BLUEBIRD_GPIO1, 1);
