@@ -8,14 +8,14 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
-#include "bluebird_gpio_controller.h"
-#include "bluebird_gpio_service.h"
-#include "bsp_btn_ble.h"
+#include "dynamic_gpio_controller.h"
+#include "dynamic_gpio_service.h"
+#include "gpio_defines.h"
 
 #define SAMPLES_IN_BUFFER 12
 volatile uint8_t state = 1;
 
-extern bluebird_gpio_service_t           bluebird_gpio_service;
+extern dynamic_gpio_service_t dynamic_gpio_service;
 
 static const nrf_drv_timer_t m_timer = NRF_DRV_TIMER_INSTANCE(1);
 static nrf_saadc_value_t     m_buffer_pool[2][SAMPLES_IN_BUFFER];
@@ -83,7 +83,7 @@ void saadc_sampling_event_enable(void)
 CHANNEL 0 = GPIO1
 CHANNEL 1 = GPIO4
 CHANNEL 3 = GPIO3
-CHNNEL 5 = GPIO2
+CHNNEL  5 = GPIO2
 */
 
 void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
@@ -126,25 +126,25 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
                     
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
               }
             }
@@ -156,19 +156,19 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
             }
             else 
@@ -177,13 +177,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
             }
 
           }
@@ -197,19 +197,19 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
             }
             else
@@ -220,13 +220,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                 }
             }
           }
@@ -238,13 +238,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
           else 
@@ -255,7 +255,7 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 0, GPIO1: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_one_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_one_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
         } 
@@ -271,19 +271,19 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    //bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    //bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
             } 
             else 
@@ -294,13 +294,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                 }
             }
           }
@@ -312,13 +312,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
           else 
@@ -329,7 +329,7 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 1, GPIO3: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_three_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_three_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
         }
@@ -343,13 +343,13 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                     i++;
 
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
           else 
@@ -360,7 +360,7 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 3, GPIO4: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_four_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_four_char_update(&dynamic_gpio_service, update_value, 2);
                 }
           }
         }
@@ -372,7 +372,7 @@ void saadc_callback(nrf_drv_saadc_evt_t const * p_event)
                     NRF_LOG_INFO("CHANNEL 5, GPIO2: %d", p_event->data.done.p_buffer[i]);
                     update_value[0] = (p_event->data.done.p_buffer[i] & 0xff00) >> 8;
                     update_value[1] = (p_event->data.done.p_buffer[i] & 0x00ff);
-                    bluebird_gpio_two_char_update(&bluebird_gpio_service, update_value, 2);
+                    nrf_gpio_two_char_update(&nrf_gpio_service, update_value, 2);
                 }
         }
 

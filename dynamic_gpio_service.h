@@ -24,9 +24,9 @@ typedef struct
     ble_gatts_char_handles_t    gpio_four_char_handles;
     ble_gatts_char_handles_t    touch_sensor_handles;
     
-}bluebird_gpio_service_t;
+}dynamic_gpio_service_t;
 
-extern bluebird_gpio_service_t bluebird_gpio_service;
+extern dynamic_gpio_service_t dynamic_gpio_service;
 
 typedef enum 
 {
@@ -45,7 +45,7 @@ typedef enum
  * @param[in] p_ble_evt     Event received from the SoftDevice.
  * @param[in] p_context     Bluebird GPIO Service structure.
  */
-void bluebird_gpio_service_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
+void nrf_gpio_service_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_context);
 /**@brief Custom Service event handler type. */
 //typedef void (*ble_cus_evt_handler_t) (ble_cus_t * p_bas, ble_cus_evt_t * p_evt);
 
@@ -53,14 +53,14 @@ void bluebird_gpio_service_on_ble_evt(ble_evt_t const * p_ble_evt, void * p_cont
  *
  * @param[in]   p_bluebird_environmental_service       Pointer to Our Service structure.
  */
-void bluebird_gpio_service_init(bluebird_gpio_service_t *p_bluebird_gpio_service);
+void nrf_gpio_service_init(dynamic_gpio_service_t *p_dynamic_gpio_service;
 
 /**@brief 
  *
  * @param[in]   p_bluebird_environmental_service       Pointer to bluebird environmental Service structure.
  * @param[in]   temperature          				   New temperature value
  */
-uint32_t bluebird_gpio_one_char_update(bluebird_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
+void nrf_gpio_one_char_update(dynamic_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
 
 
 /**@brief Function for updating temperature characteristic value
@@ -68,14 +68,14 @@ uint32_t bluebird_gpio_one_char_update(bluebird_gpio_service_t *p_bluebird_gpio_
  * @param[in]   p_bluebird_environmental_service       Pointer to bluebird environmental Service structure.
  * @param[in]   humidity            				   New humidity value
  */
-uint32_t bluebird_gpio_two_char_update(bluebird_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
+void nrf_gpio_two_char_update(dynamic_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
 
 /**@brief 
  *
  * @param[in]   p_bluebird_environmental_service       Pointer to bluebird environmental Service structure.
  * @param[in]   temperature          				   New temperature value
  */
-uint32_t bluebird_gpio_three_char_update(bluebird_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
+void nrf_gpio_three_char_update(dynamic_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
 
 
 /**@brief Function for updating temperature characteristic value
@@ -83,15 +83,7 @@ uint32_t bluebird_gpio_three_char_update(bluebird_gpio_service_t *p_bluebird_gpi
  * @param[in]   p_bluebird_environmental_service       Pointer to bluebird environmental Service structure.
  * @param[in]   humidity            				   New humidity value
  */
-uint32_t bluebird_gpio_four_char_update(bluebird_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
-
-
-/**@brief Function for updating temperature characteristic value
- *
- * @param[in]   p_bluebird_environmental_service       Pointer to bluebird environmental Service structure.
- * @param[in]   humidity            				   New humidity value
- */
-uint32_t bluebird_touch_sensor_char_update(bluebird_gpio_service_t *p_bluebird_gpio_service, uint8_t touch_sensor_state);
+void nrf_gpio_four_char_update(dynamic_gpio_service_t *p_bluebird_gpio_service,  uint8_t *gpio_value, uint8_t gpio_value_length);
 
 
 #endif  /* */
